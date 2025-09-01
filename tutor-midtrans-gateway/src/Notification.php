@@ -10,7 +10,11 @@ class Notification {
      * Constructor
      */
     public function __construct() {
+        error_log('Tutor Midtrans Gateway: Notification constructor called');
+
         add_action('init', array($this, 'handle_notification'));
+
+        error_log('Tutor Midtrans Gateway: Notification constructor completed');
     }
 
     /**

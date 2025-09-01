@@ -10,9 +10,13 @@ class Settings {
      * Constructor
      */
     public function __construct() {
+        error_log('Tutor Midtrans Gateway: Settings constructor called');
+
         add_action('tutor_admin_settings_payment_after', array($this, 'add_settings_tab'));
         add_action('tutor_admin_settings_payment_midtrans_snap', array($this, 'render_settings_page'));
         add_action('admin_post_tutor_save_midtrans_settings', array($this, 'save_settings'));
+
+        error_log('Tutor Midtrans Gateway: Settings constructor completed');
     }
 
     /**

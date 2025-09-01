@@ -10,8 +10,12 @@ class Assets {
      * Constructor
      */
     public function __construct() {
+        error_log('Tutor Midtrans Gateway: Assets constructor called');
+
         add_action('wp_enqueue_scripts', array($this, 'enqueue_scripts'));
         add_action('wp_head', array($this, 'add_inline_config'));
+
+        error_log('Tutor Midtrans Gateway: Assets constructor completed');
     }
 
     /**

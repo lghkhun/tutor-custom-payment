@@ -12,14 +12,27 @@ class Gateway extends Tutor_Payment_Base {
      * Constructor
      */
     public function __construct() {
-        parent::__construct();
-        
-        // Register AJAX hooks
-        add_action('wp_ajax_tutor_create_midtrans_snap', array($this, 'create_snap'));
-        add_action('wp_ajax_nopriv_tutor_create_midtrans_snap', array($this, 'create_snap'));
-        
+        error_log('Tutor Midtrans Gateway: Gateway constructor called');
+
+        try {
+            parent::__construct();
+            error_log('Tutor Midtrans Gateway: Parent constructor called successfully');
+        } catch (Exception $e) {
+            error_log('Tutor Midtrans Gateway: Parent constructor error: ' . $e->getMessage());
+            throw $e;
+        } catch (Error $e) {
+            error_log('Tutor Midtrans Gateway: Parent constructor fatal error: ' . $e->getMessage());
+            throw $e;
+        }
+
+        // Register AJAX hooks with unique prefix
+        add_action('wp_ajax_tutor_midtrans_create_snap', array($this, 'create_snap'));
+        add_action('wp_ajax_nopriv_tutor_midtrans_create_snap', array($this, 'create_snap'));
+
         // Add gateway to Tutor LMS
         add_filter('tutor_payment_gateways', array($this, 'register_gateway'));
+
+        error_log('Tutor Midtrans Gateway: Gateway constructor completed');
     }
 
     /**
@@ -169,13 +182,21 @@ class Gateway extends Tutor_Payment_Base {
                 wp_send_json_error($result->get_error_message());
             }
 
-            // Store order data temporarily
-            set_transient('tutor_midtrans_order_' . $order_id, array(
-                'course_id' => $course_id,
-                'user_id' => $user->ID,
-                'amount' => $price,
-                'timestamp' => time()
-            ), HOUR_IN_SECONDS);
+            // Store order data temporarily with error handling
+            try {
+                $transient_result = set_transient('tutor_midtrans_order_' . $order_id, array(
+                    'course_id' => $course_id,
+                    'user_id' => $user->ID,
+                    'amount' => $price,
+                    'timestamp' => time()
+                ), HOUR_IN_SECONDS);
+
+                if (!$transient_result) {
+                    error_log('Tutor Midtrans Gateway: Failed to set transient for order: ' . $order_id);
+                }
+            } catch (Exception $e) {
+                error_log('Tutor Midtrans Gateway: Exception setting transient: ' . $e->getMessage());
+            }
 
             wp_send_json_success($result);
 

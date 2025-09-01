@@ -46,7 +46,7 @@
             .then(function(response) {
                 if (response.success && response.data) {
                     const { token, redirect_url } = response.data;
-                    
+
                     if (checkoutStyle === 'popup') {
                         openSnapPopup(token);
                     } else {
@@ -57,11 +57,12 @@
                 }
             })
             .catch(function(error) {
+                console.error('Tutor Midtrans AJAX error:', error);
                 showError(error.message || tutorMidtrans.strings.error);
             })
             .finally(function() {
                 // Re-enable button
-                $button.prop('disabled', false).text('Pay with Midtrans');
+                $button.prop('disabled', false).text(tutorMidtrans.strings.buttonText || 'Pay with Midtrans');
             });
     }
 
@@ -73,7 +74,7 @@
             url: tutorMidtrans.ajaxUrl,
             type: 'POST',
             data: {
-                action: 'tutor_create_midtrans_snap',
+                action: 'tutor_midtrans_create_snap',
                 course_id: courseId,
                 nonce: tutorMidtrans.nonce
             },
