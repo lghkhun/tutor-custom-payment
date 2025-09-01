@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2196F3;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background rectangle -->
+  <rect x="0" y="0" width="200" height="60" rx="8" fill="url(#grad1)"/>
+  
+  <!-- Payment icon -->
+  <circle cx="30" cy="30" r="15" fill="white" opacity="0.9"/>
+  <path d="M25 25 L35 25 L35 35 L25 35 Z" fill="#4CAF50"/>
+  <circle cx="30" cy="30" r="3" fill="white"/>
+  
+  <!-- Text -->
+  <text x="55" y="25" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">MIDTRANS</text>
+  <text x="55" y="40" font-family="Arial, sans-serif" font-size="10" fill="white" opacity="0.9">SNAP GATEWAY</text>
+  
+  <!-- Secure badge -->
+  <circle cx="170" cy="20" r="8" fill="#FFD700"/>
+  <path d="M166 20 L168 18 L174 18 L172 20 L174 22 L168 22 Z" fill="#333"/>
+  <text x="170" y="35" font-family="Arial, sans-serif" font-size="8" fill="white" text-anchor="middle">SECURE</text>
+</svg>
